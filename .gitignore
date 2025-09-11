@@ -1,0 +1,19 @@
+# Dependencies
+/node_modules
+
+# Build output
+/dist
+
+# claude
+.claude/
+
+# Local .env files
+.env
+.env.local
+
+# Editor-specific files
+.vscode/
+.idea/
+
+# Astro specific ignores (if any, though generally not needed for basic setup)
+# .astro/
