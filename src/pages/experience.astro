@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const experiences = await getCollection('experience');
+const sortedExperiences = experiences.sort((a, b) => 
+  new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime()
+);
+
+const formatDate = (date: Date | undefined) => {
+  if (!date) return 'Present';
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short'
+  }).format(date);
+};
+
+const calculateDuration = (startDate: Date, endDate?: Date) => {
+  const end = endDate || new Date();
+  const start = startDate;
+  const months = (end.getFullYear() - start.getFullYear()) * 12 + 
+                 (end.getMonth() - start.getMonth());
+  
+  if (months < 12) {
+    return `${months} month${months !== 1 ? 's' : ''}`;
+  } else {
+    const years = Math.floor(months / 12);
+    const remainingMonths = months % 12;
+    let duration = `${years} year${years !== 1 ? 's' : ''}`;
+    if (remainingMonths > 0) {
+      duration += ` ${remainingMonths} month${remainingMonths !== 1 ? 's' : ''}`;
+    }
+    return duration;
+  }
+};
+---
+
+<Layout title="Experience - Your Name" description="My professional journey and career roadmap">
+  <div class="py-16 px-6">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+          My Journey
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          A roadmap of my professional experiences, skills I've developed, 
+          and the impact I've made along the way.
+        </p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="relative">
+        <!-- Timeline Line -->
+        <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+        
+        <!-- Experience Items -->
+        <div class="space-y-12">
+          {sortedExperiences.length > 0 ? (
+            sortedExperiences.map((experience, index) => (
+              <div class="relative flex items-start">
+                <!-- Timeline Dot -->
+                <div class="absolute left-6 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-sm"></div>
+                
+                <!-- Content -->
+                <div class="ml-20 bg-white rounded-lg shadow-sm border border-gray-200 p-6 w-full">
+                  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                    <div>
+                      <h3 class="text-xl font-semibold text-gray-900">
+                        {experience.data.position}
+                      </h3>
+                      <p class="text-lg text-blue-600 font-medium">
+                        {experience.data.company}
+                      </p>
+                      {experience.data.location && (
+                        <p class="text-sm text-gray-500">
+                          {experience.data.location}
+                        </p>
+                      )}
+                    </div>
+                    <div class="mt-2 sm:mt-0 text-sm text-gray-500 text-right">
+                      <div>
+                        {formatDate(experience.data.startDate)} - {formatDate(experience.data.endDate)}
+                      </div>
+                      <div class="text-xs">
+                        {calculateDuration(experience.data.startDate, experience.data.endDate)}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <p class="text-gray-700 leading-relaxed">
+                    {experience.data.description}
+                  </p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <!-- Empty State -->
+            <div class="text-center py-12">
+              <div class="text-6xl mb-4">📍</div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                No Experience Added Yet
+              </h3>
+              <p class="text-gray-600">
+                Add your professional experience by creating markdown files in 
+                <code class="bg-gray-100 px-2 py-1 rounded text-sm">src/content/experience/</code>
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="mt-20 pt-12 border-t border-gray-200">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+          Skills & Technologies
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="text-4xl mb-4">💻</div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Frontend</h3>
+            <p class="text-gray-600 text-sm">
+              React, TypeScript, Vue.js, Tailwind CSS, HTML/CSS
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">⚙️</div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Backend</h3>
+            <p class="text-gray-600 text-sm">
+              Node.js, Python, PostgreSQL, MongoDB, REST APIs
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">🛠️</div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-3">Tools</h3>
+            <p class="text-gray-600 text-sm">
+              Git, Docker, AWS, Vercel, VS Code, Figma
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="text-center mt-16 p-8 bg-gray-50 rounded-lg">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          Want to Learn More?
+        </h3>
+        <p class="text-gray-600 mb-6">
+          Check out my detailed resume or explore the projects I've worked on.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="/resume"
+            class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            View Resume
+          </a>
+          <a 
+            href="/projects"
+            class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+          >
+            See My Work
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

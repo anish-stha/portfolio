@@ -1,0 +1,56 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<header class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+  <nav class="max-w-4xl mx-auto px-6 py-4">
+    <div class="flex justify-between items-center">
+      <a href="/" class="text-xl font-semibold text-gray-900">
+        Your Name
+      </a>
+      
+      <div class="flex space-x-8">
+        <a 
+          href="/" 
+          class={`text-sm font-medium transition-colors ${
+            currentPath === '/' 
+              ? 'text-blue-600' 
+              : 'text-gray-600 hover:text-gray-900'
+          }`}
+        >
+          Home
+        </a>
+        <a 
+          href="/projects" 
+          class={`text-sm font-medium transition-colors ${
+            currentPath.startsWith('/projects') 
+              ? 'text-blue-600' 
+              : 'text-gray-600 hover:text-gray-900'
+          }`}
+        >
+          Projects
+        </a>
+        <a 
+          href="/experience" 
+          class={`text-sm font-medium transition-colors ${
+            currentPath === '/experience' 
+              ? 'text-blue-600' 
+              : 'text-gray-600 hover:text-gray-900'
+          }`}
+        >
+          Experience
+        </a>
+        <a 
+          href="/resume" 
+          class={`text-sm font-medium transition-colors ${
+            currentPath === '/resume' 
+              ? 'text-blue-600' 
+              : 'text-gray-600 hover:text-gray-900'
+          }`}
+        >
+          Resume
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
