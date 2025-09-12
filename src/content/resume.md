@@ -1,7 +1,7 @@
 # Your Name
 
-**Software Developer** | your.email@example.com | +1 (555) 123-4567  
-[GitHub](https://github.com/yourusername) | [LinkedIn](https://linkedin.com/in/yourusername) | [Portfolio](https://yourname.dev)
+**Software Developer** | np.anishstha@example.com | +1 (225) 371-0048  
+[GitHub](https://github.com/anish-stha) | [LinkedIn](https://linkedin.com/in/anish-stha) | [Portfolio](https://anish-stha.com)
 
 ---
 
