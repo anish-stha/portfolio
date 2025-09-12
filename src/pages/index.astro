@@ -7,7 +7,7 @@ const featuredProjects = await getCollection('projects', ({ data }) => {
 });
 ---
 
-<Layout title="Your Name - Developer">
+<Layout title="About Me">
   <!-- Hero Section -->
   <section class="py-20 px-6">
     <div class="max-w-4xl mx-auto">
@@ -17,7 +17,7 @@ const featuredProjects = await getCollection('projects', ({ data }) => {
           <div class="w-64 h-64 mx-auto lg:mx-0 rounded-full overflow-hidden bg-gray-200">
             <img 
               src="/src/assets/images/profile.jpg" 
-              alt="Your Name"
+              alt=""
               class="w-full h-full object-cover"
               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
             />
@@ -30,12 +30,10 @@ const featuredProjects = await getCollection('projects', ({ data }) => {
         <!-- Intro -->
         <div class="lg:w-2/3 text-center lg:text-left">
           <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Hi, I'm <span class="text-blue-600">Your Name</span>
+            Hi, I'm <span class="text-blue-600">Anish Shrestha</span>
           </h1>
           <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-            I'm a passionate developer who loves creating meaningful digital experiences. 
-            I specialize in web development and enjoy turning complex problems into 
-            simple, beautiful solutions.
+            I’m a passionate Engineer with expertise in building cloud-based data systems, from ETL pipelines and web apps to scalable deployments. I have strong experience in healthcare data integration, working with HL7, Mirth Connect, and big data platforms to deliver accurate, compliant, and impactful data solutions.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <a 
@@ -104,8 +102,7 @@ const featuredProjects = await getCollection('projects', ({ data }) => {
     <div class="max-w-4xl mx-auto text-center">
       <h2 class="text-3xl font-bold text-gray-900 mb-8">About Me</h2>
       <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-        When I'm not coding, you can find me exploring new technologies, 
-        contributing to open source projects, or sharing knowledge with the developer community.
+        When I’m not coding, you’ll often find me gaming, hanging out in my Discord server, or exploring the graphic side of tech in Unreal Engine or Blender.
       </p>
       <a 
         href="/experience" 

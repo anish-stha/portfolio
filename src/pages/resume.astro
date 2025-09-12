@@ -1,189 +1,57 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
-// Read the resume markdown content
-const resumePath = join(process.cwd(), 'src/content/resume.md');
-let resumeContent = '';
-
-try {
-  resumeContent = readFileSync(resumePath, 'utf-8');
-} catch (error) {
-  console.error('Error reading resume file:', error);
-  resumeContent = '# Resume content not found\n\nPlease add your resume content to `src/content/resume.md`';
-}
-
-// Simple markdown to HTML conversion for basic formatting
-const markdownToHtml = (markdown: string) => {
-  return markdown
-    // Headers
-    .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold text-gray-900 mb-4">$1</h1>')
-    .replace(/^## (.*$)/gm, '<h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4 pb-2 border-b border-gray-200">$1</h2>')
-    .replace(/^### (.*$)/gm, '<h3 class="text-xl font-semibold text-gray-900 mt-6 mb-2">$1</h3>')
-    // Bold text
-    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
-    // Italic text
-    .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-700 transition-colors">$1</a>')
-    // Horizontal rules
-    .replace(/^---$/gm, '<hr class="my-8 border-gray-200">')
-    // Line breaks
-    .replace(/\n\n/g, '</p><p class="mb-4">')
-    // Wrap remaining content in paragraphs
-    .replace(/^(.+)$/gm, '<p class="mb-4">$1</p>')
-    // Clean up empty paragraphs
-    .replace(/<p class="mb-4"><\/p>/g, '');
-};
-
-const htmlContent = markdownToHtml(resumeContent);
 ---
 
-<Layout title="Resume - Your Name" description="Download my resume and view my professional experience">
+<Layout title="Resume - Anish Shrestha" description="Download my resume PDF">
   <div class="py-16 px-6">
     <div class="max-w-4xl mx-auto">
       <!-- Header -->
-      <div class="text-center mb-12">
+      <div class="text-center mb-16">
         <h1 class="text-4xl font-bold text-gray-900 mb-4">
           Resume
         </h1>
-        <p class="text-lg text-gray-600 mb-8">
-          My professional background, skills, and experience
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Download my latest resume to view my professional background, skills, and experience.
         </p>
-        
-        <!-- Download Button -->
+      </div>
+
+      <!-- Download Section -->
+      <div class="text-center mb-16">
+        <a 
+          href="/resume.pdf"
+          download="resume.pdf"
+          class="bg-blue-600 text-white px-8 py-4 rounded-lg font-medium hover:bg-blue-700 transition-colors inline-flex items-center text-lg"
+        >
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          Download Resume PDF
+        </a>
+      </div>
+
+      <!-- Additional Navigation -->
+      <div class="text-center p-8 bg-gray-50 rounded-lg">
+        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+          Explore More
+        </h3>
+        <p class="text-gray-600 mb-6">
+          Learn more about my journey and see the projects I've worked on.
+        </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a 
-            href="/resume.pdf"
-            download="resume.pdf"
-            target="_blank"
-            class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors inline-flex items-center justify-center"
-          >
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-            Download PDF
-          </a>
-          <button 
-            onclick="window.print()"
-            class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors inline-flex items-center justify-center"
-          >
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-            </svg>
-            Print
-          </button>
           <a 
             href="/experience"
             class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
           >
-            View Experience Timeline
+            View Experience
           </a>
-        </div>
-      </div>
-
-      <!-- Resume Content -->
-      <div class="bg-white shadow-lg rounded-lg p-8 lg:p-12 resume-content">
-        <div set:html={htmlContent}></div>
-      </div>
-
-      <!-- Footer Actions -->
-      <div class="text-center mt-12">
-        <p class="text-gray-600 mb-6">
-          This resume is always up-to-date. You can also view my projects and detailed experience.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a 
             href="/projects"
-            class="text-blue-600 hover:text-blue-700 transition-colors font-medium"
+            class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
           >
-            View My Projects →
-          </a>
-          <a 
-            href="/experience"
-            class="text-blue-600 hover:text-blue-700 transition-colors font-medium"
-          >
-            See Detailed Experience →
-          </a>
-          <a 
-            href="mailto:your.email@example.com"
-            class="text-blue-600 hover:text-blue-700 transition-colors font-medium"
-          >
-            Contact Me →
+            See My Projects
           </a>
         </div>
-      </div>
-
-      <!-- Instructions -->
-      <div class="mt-16 p-6 bg-blue-50 rounded-lg">
-        <h3 class="text-lg font-semibold text-blue-900 mb-2">
-          📝 How to Update Your Resume
-        </h3>
-        <p class="text-blue-800 text-sm">
-          Edit the content in <code class="bg-blue-100 px-2 py-1 rounded">src/content/resume.md</code> 
-          to keep your resume current. The changes will automatically appear here.
-        </p>
       </div>
     </div>
   </div>
 </Layout>
-
-<!-- Print Styles -->
-<style>
-  @media print {
-    .no-print, header, footer, nav {
-      display: none !important;
-    }
-    
-    body {
-      background: white !important;
-    }
-    
-    .resume-content {
-      box-shadow: none !important;
-      border: none !important;
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    
-    .resume-content h1 {
-      color: #000 !important;
-      font-size: 28px !important;
-    }
-    
-    .resume-content h2 {
-      color: #000 !important;
-      font-size: 20px !important;
-      border-bottom: 1px solid #ccc !important;
-    }
-    
-    .resume-content h3 {
-      color: #000 !important;
-      font-size: 16px !important;
-    }
-    
-    .resume-content a {
-      color: #000 !important;
-      text-decoration: none !important;
-    }
-    
-    .resume-content p {
-      margin-bottom: 8px !important;
-      line-height: 1.4 !important;
-    }
-  }
-  
-  /* Resume-specific styles */
-  .resume-content h1:first-child {
-    margin-top: 0;
-  }
-  
-  .resume-content p:empty {
-    display: none;
-  }
-  
-  .resume-content hr {
-    margin: 24px 0;
-  }
-</style>
