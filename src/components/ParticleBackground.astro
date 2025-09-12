@@ -1,164 +1,36 @@
 ---
 ---
 
-<div id="particle-container" class="fixed inset-0 z-0"></div>
+<div class="gradient-background fixed inset-0 z-0"></div>
 
-<script>
-  import * as THREE from 'three';
+<style>
+.gradient-background {
+  background: linear-gradient(135deg, 
+    #ffffff 0%,
+    #f1f5f9 25%,
+    #e2e8f0 50%,
+    #cbd5e1 75%,
+    #94a3b8 100%);
+  background-attachment: fixed;
+  background-size: 400% 400%;
+}
 
-  // Create scene, camera, and renderer
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ alpha: true });
-  
-  const container = document.getElementById('particle-container');
-  if (container) {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
+/* Subtle animated gradient for extra professionalism */
+@media (prefers-reduced-motion: no-preference) {
+  .gradient-background {
+    animation: gradientShift 20s ease infinite;
   }
+}
 
-  // Create particles
-  const particleCount = 150;
-  const particles = new THREE.BufferGeometry();
-  const positions = new Float32Array(particleCount * 3);
-  const colors = new Float32Array(particleCount * 3);
-  const velocities = [];
-
-  // Data-themed colors (blues, teals, purples)
-  const dataColors = [
-    new THREE.Color(0x3b82f6), // Blue
-    new THREE.Color(0x06b6d4), // Cyan  
-    new THREE.Color(0x8b5cf6), // Purple
-    new THREE.Color(0x10b981), // Emerald
-    new THREE.Color(0x6366f1), // Indigo
-  ];
-
-  for (let i = 0; i < particleCount; i++) {
-    // Position
-    positions[i * 3] = (Math.random() - 0.5) * 20;
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
-
-    // Color
-    const color = dataColors[Math.floor(Math.random() * dataColors.length)];
-    colors[i * 3] = color.r;
-    colors[i * 3 + 1] = color.g;
-    colors[i * 3 + 2] = color.b;
-
-    // Velocity
-    velocities.push({
-      x: (Math.random() - 0.5) * 0.02,
-      y: (Math.random() - 0.5) * 0.02,
-      z: (Math.random() - 0.5) * 0.02
-    });
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
   }
-
-  particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-  const particleMaterial = new THREE.PointsMaterial({
-    size: 0.1,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.8,
-    blending: THREE.AdditiveBlending
-  });
-
-  const particleSystem = new THREE.Points(particles, particleMaterial);
-  scene.add(particleSystem);
-
-  // Add connections between nearby particles
-  const lineMaterial = new THREE.LineBasicMaterial({
-    color: 0x3b82f6,
-    transparent: true,
-    opacity: 0.2
-  });
-
-  function updateConnections() {
-    // Remove existing lines
-    scene.children = scene.children.filter(child => child !== particleSystem ? child.type !== 'Line' : true);
-    
-    const positions = particleSystem.geometry.attributes.position.array;
-    
-    for (let i = 0; i < particleCount; i++) {
-      const pos1 = new THREE.Vector3(
-        positions[i * 3],
-        positions[i * 3 + 1],
-        positions[i * 3 + 2]
-      );
-
-      for (let j = i + 1; j < particleCount; j++) {
-        const pos2 = new THREE.Vector3(
-          positions[j * 3],
-          positions[j * 3 + 1],
-          positions[j * 3 + 2]
-        );
-
-        const distance = pos1.distanceTo(pos2);
-        if (distance < 2) {
-          const lineGeometry = new THREE.BufferGeometry().setFromPoints([pos1, pos2]);
-          const line = new THREE.Line(lineGeometry, lineMaterial);
-          scene.add(line);
-        }
-      }
-    }
+  50% {
+    background-position: 100% 50%;
   }
-
-  camera.position.z = 10;
-
-  // Mouse interaction
-  let mouseX = 0;
-  let mouseY = 0;
-
-  document.addEventListener('mousemove', (event) => {
-    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-  });
-
-  // Animation loop
-  function animate() {
-    requestAnimationFrame(animate);
-
-    const positions = particleSystem.geometry.attributes.position.array;
-    
-    for (let i = 0; i < particleCount; i++) {
-      // Update positions
-      positions[i * 3] += velocities[i].x;
-      positions[i * 3 + 1] += velocities[i].y;
-      positions[i * 3 + 2] += velocities[i].z;
-
-      // Boundary check
-      if (Math.abs(positions[i * 3]) > 10) velocities[i].x *= -1;
-      if (Math.abs(positions[i * 3 + 1]) > 10) velocities[i].y *= -1;
-      if (Math.abs(positions[i * 3 + 2]) > 10) velocities[i].z *= -1;
-
-      // Mouse influence
-      const mouseInfluence = 0.001;
-      velocities[i].x += mouseX * mouseInfluence;
-      velocities[i].y += mouseY * mouseInfluence;
-    }
-
-    particleSystem.geometry.attributes.position.needsUpdate = true;
-
-    // Rotate the entire system slowly
-    particleSystem.rotation.y += 0.002;
-    particleSystem.rotation.x += 0.001;
-
-    // Update connections every few frames for performance
-    if (Math.random() < 0.1) {
-      updateConnections();
-    }
-
-    renderer.render(scene, camera);
+  100% {
+    background-position: 0% 50%;
   }
-
-  // Handle window resize
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-
-  animate();
-</script>
+}
+</style>

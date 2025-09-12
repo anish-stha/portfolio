@@ -2,7 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import ParticleBackground from '../components/ParticleBackground.astro';
-import profile from '../assets/images/profile.jpg';
+import { Image } from 'astro:assets';
+import profileImage from '../assets/images/profile.jpg';
 
 
 const featuredProjects = await getCollection('projects', ({ data }) => {
@@ -20,11 +21,14 @@ const featuredProjects = await getCollection('projects', ({ data }) => {
         <!-- Photo -->
         <div class="lg:w-1/3">
           <div class="w-64 h-64 mx-auto lg:mx-0 rounded-full overflow-hidden bg-gray-200">
-            <img 
-              src="/src/assets/images/profile.jpg" 
-              alt=""
+            <Image 
+              src={profileImage} 
+              alt="Anish Shrestha Profile"
               class="w-full h-full object-cover"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+              width={256}
+              height={256}
+              format="webp"
+              quality={90}
             />
             <div class="w-full h-full flex items-center justify-center text-gray-500 hidden">
               <span class="text-4xl">👤</span>
@@ -165,7 +169,7 @@ const featuredProjects = await getCollection('projects', ({ data }) => {
   )}
 
   <!-- Quick About -->
-  <section class="py-16 px-6">
+  <section class="py-16 px-6 bg-white relative z-10">
     <div class="max-w-4xl mx-auto text-center">
       <h2 class="text-3xl font-bold text-gray-900 mb-8">About Me</h2>
       <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
