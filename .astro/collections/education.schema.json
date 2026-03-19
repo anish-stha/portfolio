@@ -1,43 +1,19 @@
 {
-  "$ref": "#/definitions/projects",
+  "$ref": "#/definitions/education",
   "definitions": {
-    "projects": {
+    "education": {
       "type": "object",
       "properties": {
-        "title": {
+        "school": {
           "type": "string"
         },
-        "description": {
+        "degree": {
           "type": "string"
         },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "link": {
+        "field": {
           "type": "string"
         },
-        "github": {
-          "type": "string"
-        },
-        "image": {
-          "type": "string"
-        },
-        "featured": {
-          "type": "boolean",
-          "default": false
-        },
-        "category": {
-          "type": "string",
-          "enum": [
-            "Software Engineering",
-            "Data Engineering",
-            "HealthTech / Bioinformatics"
-          ]
-        },
-        "date": {
+        "startDate": {
           "anyOf": [
             {
               "type": "string",
@@ -53,15 +29,39 @@
             }
           ]
         },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
+        },
+        "location": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "gpa": {
+          "type": "string"
+        },
         "$schema": {
           "type": "string"
         }
       },
       "required": [
-        "title",
-        "description",
-        "tags",
-        "date"
+        "school",
+        "degree",
+        "startDate"
       ],
       "additionalProperties": false
     }

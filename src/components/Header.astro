@@ -2,50 +2,50 @@
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-  <nav class="max-w-4xl mx-auto px-6 py-4">
+<header class="border-b border-gray-800/50 bg-gray-950/90 backdrop-blur-md sticky top-0 z-50">
+  <nav class="max-w-5xl mx-auto px-6 py-4">
     <div class="flex justify-between items-center">
-      <a href="/" class="text-xl font-semibold text-gray-900">
+      <a href="/" class="text-xl font-semibold text-white tracking-tight">
         Anish Shrestha
       </a>
-      
+
       <div class="flex space-x-8">
-        <a 
-          href="/" 
+        <a
+          href="/"
           class={`text-sm font-medium transition-colors ${
-            currentPath === '/' 
-              ? 'text-blue-600' 
-              : 'text-gray-600 hover:text-gray-900'
+            currentPath === '/'
+              ? 'text-blue-400'
+              : 'text-gray-400 hover:text-white'
           }`}
         >
           Home
         </a>
-        <a 
-          href="/projects" 
+        <a
+          href="/projects"
           class={`text-sm font-medium transition-colors ${
-            currentPath.startsWith('/projects') 
-              ? 'text-blue-600' 
-              : 'text-gray-600 hover:text-gray-900'
+            currentPath.startsWith('/projects')
+              ? 'text-blue-400'
+              : 'text-gray-400 hover:text-white'
           }`}
         >
           Projects
         </a>
-        <a 
-          href="/experience" 
+        <a
+          href="/experience"
           class={`text-sm font-medium transition-colors ${
-            currentPath === '/experience' 
-              ? 'text-blue-600' 
-              : 'text-gray-600 hover:text-gray-900'
+            currentPath === '/experience'
+              ? 'text-blue-400'
+              : 'text-gray-400 hover:text-white'
           }`}
         >
           Experience
         </a>
-        <a 
-          href="/resume" 
+        <a
+          href="/resume"
           class={`text-sm font-medium transition-colors ${
-            currentPath === '/resume' 
-              ? 'text-blue-600' 
-              : 'text-gray-600 hover:text-gray-900'
+            currentPath === '/resume'
+              ? 'text-blue-400'
+              : 'text-gray-400 hover:text-white'
           }`}
         >
           Resume

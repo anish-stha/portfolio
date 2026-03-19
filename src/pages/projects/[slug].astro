@@ -13,151 +13,142 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await project.render();
 
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  }).format(date);
-};
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
 ---
 
-<Layout title={`${project.data.title} - Your Name`} description={project.data.description}>
+<Layout title={`${project.data.title} — Anish Shrestha`} description={project.data.description}>
   <div class="py-16 px-6">
     <div class="max-w-3xl mx-auto">
-      <!-- Back Link -->
+
       <div class="mb-8">
-        <a 
-          href="/projects"
-          class="text-blue-600 hover:text-blue-700 transition-colors font-medium"
-        >
+        <a href="/projects" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">
           ← Back to Projects
         </a>
       </div>
 
-      <!-- Project Header -->
       <header class="mb-12">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">
-          {project.data.title}
-        </h1>
-        <p class="text-xl text-gray-600 mb-6">
-          {project.data.description}
-        </p>
-        
-        <!-- Project Meta -->
-        <div class="flex flex-wrap items-center gap-6 mb-6">
-          <span class="text-sm text-gray-500">
-            {formatDate(project.data.date)}
-          </span>
+        <h1 class="text-4xl font-bold text-white mb-4">{project.data.title}</h1>
+        <p class="text-lg text-gray-400 mb-6">{project.data.description}</p>
+
+        <div class="flex flex-wrap items-center gap-4 mb-6">
+          <span class="text-gray-600 text-sm">{formatDate(project.data.date)}</span>
           {project.data.link && (
-            <a 
+            <a
               href={project.data.link}
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+              class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
             >
               View Live Demo
             </a>
           )}
           {project.data.github && (
-            <a 
+            <a
               href={project.data.github}
               target="_blank"
               rel="noopener noreferrer"
-              class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+              class="border border-gray-700 text-gray-300 px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
             >
               View on GitHub
             </a>
           )}
         </div>
 
-        <!-- Tags -->
         <div class="flex flex-wrap gap-2">
           {project.data.tags.map((tag) => (
-            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+            <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full">
               {tag}
             </span>
           ))}
         </div>
       </header>
 
-      <!-- Project Image (if exists) -->
       {project.data.image && (
         <div class="mb-12">
-          <img 
-            src={project.data.image} 
+          <img
+            src={project.data.image}
             alt={project.data.title}
-            class="w-full rounded-lg shadow-lg"
+            class="w-full rounded-xl border border-gray-800"
             onerror="this.style.display='none'"
           />
         </div>
       )}
 
-      <!-- Project Content -->
-      <article class="prose prose-lg max-w-none">
+      <article class="prose-dark">
         <Content />
       </article>
 
-      <!-- Navigation -->
-      <div class="mt-16 pt-8 border-t border-gray-200">
+      <div class="mt-16 pt-8 border-t border-gray-800">
         <div class="flex justify-between items-center">
-          <a 
-            href="/projects"
-            class="text-blue-600 hover:text-blue-700 transition-colors font-medium"
-          >
+          <a href="/projects" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">
             ← All Projects
           </a>
-          <a 
-            href="/"
-            class="text-blue-600 hover:text-blue-700 transition-colors font-medium"
-          >
+          <a href="/" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">
             Back to Home
           </a>
         </div>
       </div>
+
     </div>
   </div>
 </Layout>
 
 <style>
-  /* Custom prose styles for better project content display */
-  .prose {
-    @apply text-gray-700;
-  }
-  
-  .prose h1 {
-    @apply text-3xl font-bold text-gray-900 mt-8 mb-4;
-  }
-  
-  .prose h2 {
-    @apply text-2xl font-bold text-gray-900 mt-8 mb-4;
-  }
-  
-  .prose h3 {
-    @apply text-xl font-bold text-gray-900 mt-6 mb-3;
-  }
-  
-  .prose p {
-    @apply mb-4 leading-relaxed;
-  }
-  
-  .prose ul, .prose ol {
-    @apply mb-4 pl-6;
-  }
-  
-  .prose li {
-    @apply mb-2;
-  }
-  
-  .prose code {
-    @apply bg-gray-100 px-2 py-1 rounded text-sm;
-  }
-  
-  .prose pre {
-    @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto;
-  }
-  
-  .prose blockquote {
-    @apply border-l-4 border-blue-500 pl-4 italic;
-  }
+.prose-dark {
+  color: #9ca3af;
+  line-height: 1.75;
+}
+.prose-dark :global(h1),
+.prose-dark :global(h2),
+.prose-dark :global(h3) {
+  color: #f1f5f9;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.prose-dark :global(h1) { font-size: 1.875rem; }
+.prose-dark :global(h2) { font-size: 1.5rem; }
+.prose-dark :global(h3) { font-size: 1.25rem; }
+.prose-dark :global(p) { margin-bottom: 1rem; }
+.prose-dark :global(ul),
+.prose-dark :global(ol) { padding-left: 1.5rem; margin-bottom: 1rem; }
+.prose-dark :global(li) { margin-bottom: 0.5rem; }
+.prose-dark :global(code) {
+  background: rgba(255,255,255,0.07);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+  color: #93c5fd;
+}
+.prose-dark :global(pre) {
+  background: #111827;
+  border: 1px solid #1f2937;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.prose-dark :global(pre code) {
+  background: none;
+  padding: 0;
+  color: #e5e7eb;
+}
+.prose-dark :global(blockquote) {
+  border-left: 3px solid #3b82f6;
+  padding-left: 1rem;
+  color: #6b7280;
+  font-style: italic;
+}
+.prose-dark :global(a) {
+  color: #60a5fa;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-dark :global(a:hover) { color: #93c5fd; }
+.prose-dark :global(hr) {
+  border: none;
+  border-top: 1px solid #1f2937;
+  margin: 2rem 0;
+}
 </style>

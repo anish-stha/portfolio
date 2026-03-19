@@ -10,6 +10,7 @@ const projects = defineCollection({
     github: z.string().optional(),
     image: z.string().optional(),
     featured: z.boolean().default(false),
+    category: z.enum(['Software Engineering', 'Data Engineering', 'HealthTech / Bioinformatics']).optional(),
     date: z.date(),
   }),
 });
@@ -26,7 +27,22 @@ const experience = defineCollection({
   }),
 });
 
+const education = defineCollection({
+  type: 'content',
+  schema: z.object({
+    school: z.string(),
+    degree: z.string(),
+    field: z.string().optional(),
+    startDate: z.date(),
+    endDate: z.date().optional(),
+    location: z.string().optional(),
+    description: z.string().optional(),
+    gpa: z.string().optional(),
+  }),
+});
+
 export const collections = {
   projects,
   experience,
+  education,
 };

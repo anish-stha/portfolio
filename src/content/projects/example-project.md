@@ -6,6 +6,7 @@ link: "https://example.com"
 github: "https://github.com/yourusername/example-project"
 image: "/src/assets/images/example-project.jpg"
 featured: true
+category: "Software Engineering"
 date: 2024-01-15
 ---
 
